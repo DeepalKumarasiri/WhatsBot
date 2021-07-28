@@ -7,11 +7,13 @@ const { MongoClient } = require('mongodb');
 async function mainF(keyword) {
   
   const uri = config.movie_db_url;
-  const client = new MongoClient(uri);
-  const mydb = client.db("Cluster0").collection("-1001425546590");
+  const client = await new MongoClient(uri, {useUnifiedTopology: true});
 
   try {
     await client.connect();
+    
+    const mydb = client.db("Cluster0").collection("-1001425546590");
+    
     var key_word = keyword;
     const replyText = await search_Movie(mydb, key_word);
     
