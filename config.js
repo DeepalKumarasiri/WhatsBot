@@ -10,5 +10,6 @@ module.exports = {
     default_tr_lang: process.env.DEFAULT_TR_LANG || "en",
     enable_delete_alert: process.env.ENABLE_DELETE_ALERT || "true",
     ocr_space_api_key: process.env.OCR_SPACE_API_KEY || "",
-    infospace_api_key: process.env.INFOSPACE_API_KEY || ""
+    infospace_api_key: process.env.INFOSPACE_API_KEY || "",
+    movie_db_url: process.env.MOVIES_IRUPC || ""
 }
