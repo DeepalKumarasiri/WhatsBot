@@ -24,6 +24,7 @@ const watch = require('./modules/watch');
 const shorten = require('./modules/urlshortner');
 const ocr = require('./modules/ocr');
 const emailVerifier = require('./modules/emailverifier');
+const movies = require('./modules/movies');
 
 const client = new Client({ puppeteer: { headless: true, args: ['--no-sandbox'] }, session: config.session });
 
@@ -429,6 +430,16 @@ client.on('message_create', async (msg) => {
             }
             else {
                 client.sendMessage(msg.to, `Short URL for ${data.input} is 👇\n${data.short}`)
+            }
+        }
+        else if (msg.body.startsWith("!iru ")) { // Movie Module
+            msg.delete(true)
+            var data = await movies.mainF(msg.body.replace("!iru ", ""));
+            if (data == "error") {
+                client.sendMessage(msg.to, `🙇‍♂️ *Error*\n\n` + "```Something Happend```")
+            }
+            else {
+                client.sendMessage(msg.to, `${data}`)
             }
         }
         else if (msg.body.startsWith("!shorten") && msg.hasQuotedMsg) { // URL Shortener Module Reply
