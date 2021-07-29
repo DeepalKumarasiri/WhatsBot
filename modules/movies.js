@@ -15,7 +15,7 @@ async function mainF(keyword) {
     
     const mydb = client.db("Cluster0").collection("-1001425546590");
     
-    var key_word = keyword;
+    var key_word = keyword.replace("(", "").replace(")", "");
     //console.log(key_word);
     const replyText = await search_Movie(mydb, key_word);
     //console.log("Replay Text Returned");
@@ -72,9 +72,10 @@ async function search_Movie(mydb,searchWord) {
       var tempLink = await getShortURL(tempoLink);
       var tempLink = tempLink.short;
     }
-
+    fileSize = "["+fileSize+"]";
+    fileSize = fileSize.replace("[1MB]", "♨️Subtitle").replace("[0MB]", "♨️Subtitle").replace("[2MB]", "♨️Subtitle").replace("[3MB]", "♨️Subtitle");
     outPut = outPut +`
-*[${fileSize.replace("1MB", "♨️Subtitle").replace("0MB", "♨️Subtitle").replace("2MB", "♨️Subtitle").replace("3MB", "♨️Subtitle")}] ${file_name_without}*
+*[${fileSize}] ${file_name_without}*
 📌 ${tempLink}
 `;
     var fileid = "";
