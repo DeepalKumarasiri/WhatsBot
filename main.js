@@ -25,7 +25,6 @@ const shorten = require('./modules/urlshortner');
 const ocr = require('./modules/ocr');
 const emailVerifier = require('./modules/emailverifier');
 const movies = require('./modules/movies');
-const uploader = require('./modules/uploader');
 
 const client = new Client({ puppeteer: { headless: true, args: ['--no-sandbox'] }, session: config.session });
 
@@ -80,18 +79,70 @@ client.on('message', async msg => {
             }
         }
     }*/
-    if (msg.body.startsWith("!iru ")) { // Movie Module
+    if (msg.body.startsWith(".link ")) { // Movie Module
         console.log("Deleted By client.on.message");
-        var data = await movies.mainF(msg.body.replace("!iru ", ""));
+        var data = await movies.mainF(msg.body.replace(".link ", ""));
         console.log("data outputed");
         if (data == "error") {
-            client.sendMessage(msg.to, "Error Occures")
+            msg.reply("Error Occured");
         }
         else {
             console.log("Coose else ");
-            client.sendMessage(msg.to, `${data}`)
+            msg.reply(data);
         }
     }
+        else if (msg.body.startsWith(".shorten ")) { // URL Shortener Module
+ 
+            var data = await shorten.getShortURL(msg.body.replace(".shorten ", ""));
+            if (data == "error") {
+                msg.reply(msg.to, `🙇‍♂️ *Error*\n\n` + "```Please make sure the entered URL is in correct format.```");
+            }
+            else {
+                msg.reply(msg.to, `Short URL for ${data.input} is 👇\n${data.short}`);
+            }
+        }
+        else if (msg.body.startsWith(".shorten") && msg.hasQuotedMsg) { // URL Shortener Module Reply
+
+            var quotedMsg = await msg.getQuotedMessage();
+            var data = await shorten.getShortURL(quotedMsg.body);
+            if (data == "error") {
+                msg.reply(msg.to, `🙇‍♂️ *Error*\n\n` + "```Please make sure the entered URL is in correct format.```");
+            }
+            else {
+                msg.reply(msg.to, `Short URL for ${data.input} is 👇\n${data.short}`);
+            }
+
+        }else if (msg.body.startsWith(".directlink") && msg.hasQuotedMsg) { // Telegraph Module
+
+            var quotedMsg = await msg.getQuotedMessage();
+            var attachmentData = await quotedMsg.downloadMedia();
+            var data = await telegraph.mainF(attachmentData);
+            if (data == "error") {
+                msg.reply(`Error occured while create direct link.`)
+            } else {
+                msg.reply(`🔗 *Direct Link 👇*\n\n` + "```" + data + "```")
+            }
+
+        } else if (msg.body.startsWith(".yt ")) { // Youtube Module
+
+            var data = await youtube.mainF(msg.body.replace(".yt ", ""));
+            if (data == "error") {
+                msg.reply(msg.to, `🙇‍♂️ *Error*\n\n` + "```Something Unexpected Happened to fetch the YouTube video```")
+            } else {
+                msg.reply(msg.to, new MessageMedia(data.image.mimetype, data.image.data, data.image.filename), { caption: `*${data.title}*\n\nViews: ` + "```" + data.views + "```\nLikes: " + "```" + data.likes + "```\nComments: " + "```" + data.comments + "```\n\n*Download Link* 👇\n" + "```" + data.download_link + "```" });
+            }
+
+        } else if (msg.body.startsWith(".yt") && msg.hasQuotedMsg) { // Youtube Module Reply
+
+            var quotedMsg = await msg.getQuotedMessage();
+            var data = await youtube.mainF(quotedMsg.body);
+            if (data == "error") {
+                msg.reply(msg.to, `🙇‍♂️ *Error*\n\n` + "```Something Unexpected Happened to fetch the YouTube video```")
+            } else {
+                msg.reply(msg.to, new MessageMedia(data.image.mimetype, data.image.data, data.image.filename), { caption: `*${data.title}*\n\nViews: ` + "```" + data.views + "```\nLikes: " + "```" + data.likes + "```\nComments: " + "```" + data.comments + "```\n\n*Download Link* 👇\n" + "```" + data.download_link + "```" });
+            }
+
+        }
 });
 
 const allricketschedules = {} // Will need later
@@ -323,17 +374,6 @@ client.on('message_create', async (msg) => {
         } else if (msg.body.startsWith('!git ')) { // Gitinfo Module with link
             msg.delete(true)
             var data = await gitinfo.detail(msg.body.replace('!git ', ''))
-            if (data.status) {
-                if (data.data.status) {
-                    await client.sendMessage(msg.to, new MessageMedia(data.data.mimetype, data.data.data, data.data.filename))
-                }
-                client.sendMessage(msg.to, data.msg)
-            } else {
-                client.sendMessage(msg.to, `🙇‍♂️ *Error*\n\n` + "```" + data.msg + "```")
-            }
-        } else if (msg.body.startsWith('!upload ')) { // Upload Module with link
-            msg.delete(true)
-            var data = await uploader.detail(msg.body.replace('!upload ', ''))
             if (data.status) {
                 if (data.data.status) {
                     await client.sendMessage(msg.to, new MessageMedia(data.data.mimetype, data.data.data, data.data.filename))
