@@ -88,7 +88,7 @@ async function search_Movie(mydb,searchWord) {
 
 async function findQuesy(searchArray){
   
-  if (searchArray.length>=6){
+  if (searchArray.length>=8){
     var query = "";
   } else if (searchArray.length==1){
     var query = { 
@@ -118,6 +118,18 @@ async function findQuesy(searchArray){
     var query = { 
       $text: { 
         $search: `\"${searchArray[0]}\" \"${searchArray[1]}\" \"${searchArray[2]}\" \"${searchArray[3]}\" \"${searchArray[4]}\"` 
+      }
+    }
+  } else if (searchArray.length==6){
+    var query = { 
+      $text: { 
+        $search: `\"${searchArray[0]}\" \"${searchArray[1]}\" \"${searchArray[2]}\" \"${searchArray[3]}\" \"${searchArray[4]}\" \"${searchArray[5]}\"` 
+      }
+    }
+  } else if (searchArray.length==7){
+    var query = { 
+      $text: { 
+        $search: `\"${searchArray[0]}\" \"${searchArray[1]}\" \"${searchArray[2]}\" \"${searchArray[3]}\" \"${searchArray[4]}\" \"${searchArray[5]}\" \"${searchArray[6]}\"` 
       }
     }
   } else{var query ="";}
