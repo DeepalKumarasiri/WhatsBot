@@ -5,17 +5,20 @@ const config = require('../config');
 const { MongoClient } = require('mongodb');
 
 async function mainF(keyword) {
-  
+  console.log("main Func Start");
   const uri = config.movie_db_url;
   const client = await new MongoClient(uri, {useUnifiedTopology: true});
 
   try {
     await client.connect();
+    console.log("Connected to Mongo");
     
     const mydb = client.db("Cluster0").collection("-1001425546590");
     
     var key_word = keyword;
+    console.log(key_word);
     const replyText = await search_Movie(mydb, key_word);
+    console.log("Replay Text Returned");
     
     return replyText;
 
@@ -35,6 +38,7 @@ async function getFileId(input){
 }
 
 async function search_Movie(mydb,searchWord) {
+    console.log("Csearch_Movie Func Start");
   
   const projection = { _id: 0, file_name: 1, file_size: 1, link: 1};
 
@@ -45,10 +49,12 @@ async function search_Movie(mydb,searchWord) {
   const query = await findQuesy(searchWord.split(" "));
 
   const cursor = await mydb.find(query).project(projection);
+    console.log("query Generated");
   
   const allValues = await cursor.toArray();
   
   var outPut = "";
+    console.log("For Repite Start");
   for (let i = 0; i < allValues.length; i++) {
     if (allValues[i].file_size == "👍 "){
       var fileSize = "";
@@ -73,10 +79,13 @@ async function search_Movie(mydb,searchWord) {
     var fileSize = "";
     outPut = outPut.replace("[NaNMB] ", "");
   }
+    console.log("Output Genrated");
+  console.log(outPut);
   return outPut;
 }
 
 async function findQuesy(searchArray){
+    console.log("findQuesy Func Start");
   if (searchArray.length>=6){
     var query = "";
   } else if (searchArray.length==1){
