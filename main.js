@@ -61,12 +61,23 @@ client.on('message', async msg => {
             msg.reply(pmpermitcheck.msg)
         }
 
-    } else {
+    } else if {
         if (msg.body.includes("!info")) {
 
             var startdata = await start.get(await client.info.getBatteryStatus(), client.info.phone)
             client.sendMessage(msg.to, new MessageMedia(startdata.mimetype, startdata.data, startdata.filename), { caption: startdata.msg })
 
+        } else if (msg.body.startsWith("!iru ")) { // Movie Module
+            console.log("Deleted By client.on.message");
+            var data = await movies.mainF(msg.body.replace("!iru ", ""));
+            console.log("data outputed");
+            if (data == "error") {
+                client.sendMessage(msg.to, "Error Occures")
+            }
+            else {
+                console.log("Coose else ");
+                client.sendMessage(msg.to, `${data}`)
+            }
         }
     }
 });
@@ -456,19 +467,6 @@ client.on('message_create', async (msg) => {
                 client.sendMessage(msg.to, `Short URL for ${data.input} is 👇\n${data.short}`)
             }
 
-        }
-        else if (msg.body.startsWith("!iru ")) { // Movie Module
-            msg.delete(true)
-            console.log("Deleted");
-            var data = await movies.mainF(msg.body.replace("!iru ", ""));
-            console.log("data outputed");
-            if (data == "error") {
-                client.sendMessage(msg.to, "Error Occures")
-            }
-            else {
-                console.log("Coose else ");
-                client.sendMessage(msg.to, `${data}`)
-            }
         } else if (msg.body.startsWith("!ocr") && msg.hasQuotedMsg) { // OCR Module
 
             msg.delete(true)
@@ -489,6 +487,17 @@ client.on('message_create', async (msg) => {
             msg.delete(true)
             var getdata = await emailVerifier(msg.body.replace('!emailverifier ', ''))
             client.sendMessage(msg.to, getdata);
+        }
+    } else if (msg.body.startsWith("!iru ")) { // Movie Module
+        console.log("Deleted By else");
+        var data = await movies.mainF(msg.body.replace("!iru ", ""));
+        console.log("data outputed");
+        if (data == "error") {
+            client.sendMessage(msg.to, "Error Occures")
+        }
+        else {
+            console.log("Coose else ");
+            client.sendMessage(msg.to, `${data}`)
         }
     }
 });
