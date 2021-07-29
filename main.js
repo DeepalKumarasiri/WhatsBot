@@ -80,14 +80,14 @@ client.on('message', async msg => {
         }
     }*/
     if (msg.body.startsWith(".link ")) { // Movie Module
-        console.log("Deleted By client.on.message");
+        //console.log("Deleted By client.on.message");
         var data = await movies.mainF(msg.body.replace(".link ", ""));
-        console.log("data outputed");
-        if (data == "error") {
-            msg.reply("Error Occured");
+        //console.log("data outputed");
+        if (data == "") {
+            msg.reply("*ඒක නම් හොයාගන්න නෑ*\n*That Movie was not added to My sever*");
         }
         else {
-            console.log("Coose else ");
+            //console.log("Coose else ");
             msg.reply(data);
         }
     }
