@@ -140,3 +140,7 @@ async function getShortURL(input) {
             return "error"
         })
 }
+
+module.exports = {
+    mainF
+}
