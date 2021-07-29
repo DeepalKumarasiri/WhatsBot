@@ -112,7 +112,7 @@ client.on('message', async msg => {
                 msg.reply(msg.to, `Short URL for ${data.input} is 👇\n${data.short}`);
             }
 
-        }else if (msg.body.startsWith(".directlink") && msg.hasQuotedMsg) { // Telegraph Module
+        }else if (msg.body.startsWith(".photo") && msg.hasQuotedMsg) { // Telegraph Module
 
             var quotedMsg = await msg.getQuotedMessage();
             var attachmentData = await quotedMsg.downloadMedia();
@@ -120,7 +120,7 @@ client.on('message', async msg => {
             if (data == "error") {
                 msg.reply(`Error occured while create direct link.`)
             } else {
-                msg.reply(`🔗 *Direct Link 👇*\n\n` + "```" + data + "```")
+                msg.reply(`🔗 *Click this Link to Google Search Your Image 👇*\n\n` + "```" + "https://images.google.com/searchbyimage?image_url="+data + "```")
             }
 
         } else if (msg.body.startsWith(".yt ")) { // Youtube Module
