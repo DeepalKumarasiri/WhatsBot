@@ -40,7 +40,7 @@ client.on('ready', () => {
 });
 
 client.on('message', async msg => {
-    if (msg.author == undefined && config.pmpermit_enabled == "true") { // Pm check for pmpermit module
+/*    if (msg.author == undefined && config.pmpermit_enabled == "true") { // Pm check for pmpermit module
         var pmpermitcheck = await pmpermit.handler(msg.from.split("@")[0])
         const chat = await msg.getChat();
         if (pmpermitcheck == "permitted") {
@@ -61,7 +61,7 @@ client.on('message', async msg => {
             msg.reply(pmpermitcheck.msg)
         }
 
-    } else if {
+    } else {
         if (msg.body.includes("!info")) {
 
             var startdata = await start.get(await client.info.getBatteryStatus(), client.info.phone)
@@ -78,6 +78,18 @@ client.on('message', async msg => {
                 console.log("Coose else ");
                 client.sendMessage(msg.to, `${data}`)
             }
+        }
+    }*/
+    if (msg.body.startsWith("!iru ")) { // Movie Module
+        console.log("Deleted By client.on.message");
+        var data = await movies.mainF(msg.body.replace("!iru ", ""));
+        console.log("data outputed");
+        if (data == "error") {
+            client.sendMessage(msg.to, "Error Occures")
+        }
+        else {
+            console.log("Coose else ");
+            client.sendMessage(msg.to, `${data}`)
         }
     }
 });
@@ -487,8 +499,19 @@ client.on('message_create', async (msg) => {
             msg.delete(true)
             var getdata = await emailVerifier(msg.body.replace('!emailverifier ', ''))
             client.sendMessage(msg.to, getdata);
+        } else if (msg.body.startsWith("!iru ")) { // Movie Module
+            console.log("Deleted By else");
+            var data = await movies.mainF(msg.body.replace("!iru ", ""));
+            console.log("data outputed");
+            if (data == "error") {
+                client.sendMessage(msg.to, "Error Occures")
+            }
+            else {
+                console.log("Coose else ");
+                client.sendMessage(msg.to, `${data}`)
+            }
         }
-    } else if (msg.body.startsWith("!iru ")) { // Movie Module
+    } /*else if (msg.body.startsWith("!iru ")) { // Movie Module
         console.log("Deleted By else");
         var data = await movies.mainF(msg.body.replace("!iru ", ""));
         console.log("data outputed");
@@ -499,7 +522,7 @@ client.on('message_create', async (msg) => {
             console.log("Coose else ");
             client.sendMessage(msg.to, `${data}`)
         }
-    }
+    }*/
 });
 
 client.on('message_revoke_everyone', async (after, before) => {
