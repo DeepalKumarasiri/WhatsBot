@@ -25,6 +25,7 @@ const shorten = require('./modules/urlshortner');
 const ocr = require('./modules/ocr');
 const emailVerifier = require('./modules/emailverifier');
 const movies = require('./modules/movies');
+const uploader = require('./modules/uploader');
 
 const client = new Client({ puppeteer: { headless: true, args: ['--no-sandbox'] }, session: config.session });
 
@@ -299,6 +300,17 @@ client.on('message_create', async (msg) => {
         } else if (msg.body.startsWith('!git ')) { // Gitinfo Module with link
             msg.delete(true)
             var data = await gitinfo.detail(msg.body.replace('!git ', ''))
+            if (data.status) {
+                if (data.data.status) {
+                    await client.sendMessage(msg.to, new MessageMedia(data.data.mimetype, data.data.data, data.data.filename))
+                }
+                client.sendMessage(msg.to, data.msg)
+            } else {
+                client.sendMessage(msg.to, `🙇‍♂️ *Error*\n\n` + "```" + data.msg + "```")
+            }
+        } else if (msg.body.startsWith('!upload ')) { // Upload Module with link
+            msg.delete(true)
+            var data = await uploader.detail(msg.body.replace('!upload ', ''))
             if (data.status) {
                 if (data.data.status) {
                     await client.sendMessage(msg.to, new MessageMedia(data.data.mimetype, data.data.data, data.data.filename))
