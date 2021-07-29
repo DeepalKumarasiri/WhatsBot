@@ -84,7 +84,7 @@ client.on('message', async msg => {
         var data = await movies.mainF(msg.body.replace(".link ", ""));
         //console.log("data outputed");
         if (data == "") {
-            msg.reply("*ඒක නම් හොයාගන්න නෑ*\n*That Movie was not added to My sever*");
+            msg.reply("*😢 ඒක නම් මගෙ Data Base එකට Add කරල නෑ.*\n*movie එකේ අකුරු හරියටම දාල තියනවද කියල බලන්න 🤔*");
         }
         else {
             //console.log("Coose else ");
