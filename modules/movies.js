@@ -28,7 +28,7 @@ async function mainF(keyword) {
 }
 
 async function getFileId(input){
-  if (input.indexOf("t.me/IruPC/")>-1){
+  if (input.indexOf("t.me/IruPC/")>-1 || input.indexOf("irupc.net")>-1){
     return input;
   }
   else {
@@ -65,7 +65,7 @@ async function search_Movie(mydb,searchWord) {
     
     var file_name_without = await file_name_gen(allValues[i].file_name);
     
-    if (fileid.indexOf("IruPC")>-1){
+    if (fileid.indexOf("IruPC")>-1 || fileid.indexOf("irupc.net/")>-1){
       var tempLink = fileid; 
     } else{
       var tempoLink = `https://www.irupc.net/p/bot.html?${fileid}?${file_name_without}?size?${fileSize}`; 
