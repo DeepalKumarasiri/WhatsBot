@@ -141,4 +141,6 @@ async function getShortURL(input) {
         })
 }
 
-module.exports = mainF
+module.exports = {
+    mainF
+}
