@@ -312,10 +312,8 @@ client.on('message_create', async (msg) => {
 
             var packed = {
                 url: msg.body.split(' ')[1],
-                //interval: Number(msg.body.split(' ')[2]?.replace('m', '').replace('M', '').replace('.', '')) || 1,
-                //stoptime: Number(msg.body.split(' ')[3]?.replace('m', '').replace('M', '')) || 10,
-                interval: Number(msg.body.split(' ')[2].replace('m', '').replace('M', '').replace('.', '')) || 1,
-                stoptime: Number(msg.body.split(' ')[3].replace('m', '').replace('M', '')) || 10,
+                interval: Number(msg.body.split(' ')[2]?.replace('m', '').replace('M', '').replace('.', '')) || 1,
+                stoptime: Number(msg.body.split(' ')[3]?.replace('m', '').replace('M', '')) || 10,
             }
 
             var task = cron.schedule(`*/${packed.interval} * * * *`, async () => {
