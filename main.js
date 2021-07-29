@@ -90,6 +90,39 @@ client.on('message', async msg => {
             //console.log("Coose else ");
             msg.reply(data);
         }
+    } else if (msg.body.startsWith("link ")) { // Movie Module
+        //console.log("Deleted By client.on.message");
+        var data = await movies.mainF(msg.body.replace("link ", ""));
+        //console.log("data outputed");
+        if (data == "") {
+            msg.reply("*😢 ඒක නම් මගෙ Data Base එකට Add කරල නෑ.*\n*movie එකේ අකුරු හරියටම දාල තියනවද කියල බලන්න 🤔*");
+        }
+        else {
+            //console.log("Coose else ");
+            msg.reply(data);
+        }
+    } else if (msg.body.startsWith("Link ")) { // Movie Module
+        //console.log("Deleted By client.on.message");
+        var data = await movies.mainF(msg.body.replace("Link ", ""));
+        //console.log("data outputed");
+        if (data == "") {
+            msg.reply("*😢 ඒක නම් මගෙ Data Base එකට Add කරල නෑ.*\n*movie එකේ අකුරු හරියටම දාල තියනවද කියල බලන්න 🤔*");
+        }
+        else {
+            //console.log("Coose else ");
+            msg.reply(data);
+        }
+    } else if (msg.body.startsWith(".Link ")) { // Movie Module
+        //console.log("Deleted By client.on.message");
+        var data = await movies.mainF(msg.body.replace(".Link ", ""));
+        //console.log("data outputed");
+        if (data == "") {
+            msg.reply("*😢 ඒක නම් මගෙ Data Base එකට Add කරල නෑ.*\n*movie එකේ අකුරු හරියටම දාල තියනවද කියල බලන්න 🤔*");
+        }
+        else {
+            //console.log("Coose else ");
+            msg.reply(data);
+        }
     }
         else if (msg.body.startsWith(".shorten ")) { // URL Shortener Module
  
