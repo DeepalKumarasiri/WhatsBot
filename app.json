@@ -14,7 +14,7 @@
   "env": {
     "SESSION": {
       "description": "Puppeteer Session. Get it by running genToken.js",
-      "value": "{"WABrowserId":"\"p+9tl6zmdR9ofBL4f6OJtA==\"","WASecretBundle":"{\"key\":\"VPqw9YjzkGgFM7Z+OBhor2hIBImnukDYkIvYT85LxBo=\",\"encKey\":\"MiscB0IzLhiRfhjl/arj/3U8Sc7ZpY7jwULkVsEFnag=\",\"macKey\":\"VPqw9YjzkGgFM7Z+OBhor2hIBImnukDYkIvYT85LxBo=\"}","WAToken1":"\"ZI4l9RH/TkWwS6qBZwntmG13kHmSw6qYVS3/5hZhKjA=\"","WAToken2":"\"1@On/pgJR3/Mads2pPPa5/F49b2uEjkhOszvc43BpTleYR0wIribCkLF5zhz+OoxrjFi8o5c/QDdiYCA==\""}"
+      "value": ""
     },
     "PMPERMIT_ENABLED": {
       "description": "Enable Pmpermit write true or false only",
