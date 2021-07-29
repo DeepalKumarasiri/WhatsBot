@@ -48,7 +48,7 @@ async function search_Movie(mydb,searchWord) {
   
   const query = await findQuesy(searchWord.split(" "));
 
-  const cursor = await mydb.find(query).project(projection);
+  const cursor = await mydb.find(query).project(projection).limit(25);
     //console.log("query Generated");
   
   const allValues = await cursor.toArray();
