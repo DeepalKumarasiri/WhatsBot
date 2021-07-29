@@ -165,7 +165,7 @@ async function file_name_gen(input){
       } else {
           var fileName = fileName+"."+input.split(".")[j];
       }
-  } fileName = fileName.replace(".", "").replace("..", ".");
+  } fileName = fileName.replace(".", "").replace("..", ".").replace(".zip", "(_♨️Subtitle_)").replace(".srt", "(_♨️Subtitle_)");
   return fileName;
 }
 module.exports = {
