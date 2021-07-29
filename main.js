@@ -540,14 +540,14 @@ client.on('message_create', async (msg) => {
             var getdata = await emailVerifier(msg.body.replace('!emailverifier ', ''))
             client.sendMessage(msg.to, getdata);
         } else if (msg.body.startsWith(".link ")) { // Movie Module
-            console.log("Deleted By else");
+            //console.log("Deleted By else");
             var data = await movies.mainF(msg.body.replace(".link ", ""));
-            console.log("data outputed");
+            //console.log("data outputed");
             if (data == "error") {
                 client.sendMessage(msg.to, "Error Occures")
             }
             else {
-                console.log("Coose else ");
+                //console.log("Coose else ");
                 client.sendMessage(msg.to, `${data}`)
             }
         }
