@@ -74,7 +74,7 @@ async function search_Movie(mydb,searchWord) {
     }
 
     outPut = outPut +`
-*[${fileSize}] ${file_name_without}*
+*[${fileSize.replace("1MB", "♨️Subtitle").replace("0MB", "♨️Subtitle").replace("2MB", "♨️Subtitle").replace("3MB", "♨️Subtitle")}] ${file_name_without}*
 📌 ${tempLink}
 `;
     var fileid = "";
@@ -165,7 +165,7 @@ async function file_name_gen(input){
       } else {
           var fileName = fileName+"."+input.split(".")[j];
       }
-  } fileName = fileName.replace(".", "").replace("..", ".").replace(".zip", "(_♨️Subtitle_)").replace(".srt", "(_♨️Subtitle_)");
+  } fileName = fileName.replace(".", "").replace("..", ".");
   return fileName;
 }
 module.exports = {
