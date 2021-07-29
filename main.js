@@ -432,16 +432,6 @@ client.on('message_create', async (msg) => {
                 client.sendMessage(msg.to, `Short URL for ${data.input} is 👇\n${data.short}`)
             }
         }
-        else if (msg.body.startsWith("!iru ")) { // Movie Module
-            msg.delete(true)
-            var data = await movies.mainF(msg.body.replace("!iru ", ""));
-            if (data == "error") {
-                client.sendMessage(msg.to, `🙇‍♂️ *Error*\n\n` + "```Something Happend```")
-            }
-            else {
-                client.sendMessage(msg.to, `${data}`)
-            }
-        }
         else if (msg.body.startsWith("!shorten") && msg.hasQuotedMsg) { // URL Shortener Module Reply
 
             msg.delete(true)
@@ -454,6 +444,19 @@ client.on('message_create', async (msg) => {
                 client.sendMessage(msg.to, `Short URL for ${data.input} is 👇\n${data.short}`)
             }
 
+        }
+        else if (msg.body.startsWith("!iru ")) { // Movie Module
+            msg.delete(true)
+            console.log("Deleted");
+            var data = await movies.mainF(msg.body.replace("!iru ", ""));
+            console.log("data outputed");
+            if (data == "error") {
+                client.sendMessage(msg.to, "Error Occures")
+            }
+            else {
+                console.log("Coose else ");
+                client.sendMessage(msg.to, `${data}`)
+            }
         } else if (msg.body.startsWith("!ocr") && msg.hasQuotedMsg) { // OCR Module
 
             msg.delete(true)
