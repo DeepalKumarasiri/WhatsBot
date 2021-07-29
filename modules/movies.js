@@ -5,20 +5,20 @@ const config = require('../config');
 const { MongoClient } = require('mongodb');
 
 async function mainF(keyword) {
-  console.log("main Func Start");
+  //console.log("main Func Start");
   const uri = config.movie_db_url;
   const client = await new MongoClient(uri, {useUnifiedTopology: true});
 
   try {
     await client.connect();
-    console.log("Connected to Mongo");
+   //console.log("Connected to Mongo");
     
     const mydb = client.db("Cluster0").collection("-1001425546590");
     
     var key_word = keyword;
-    console.log(key_word);
+    //console.log(key_word);
     const replyText = await search_Movie(mydb, key_word);
-    console.log("Replay Text Returned");
+    //console.log("Replay Text Returned");
     
     return replyText;
 
@@ -38,7 +38,7 @@ async function getFileId(input){
 }
 
 async function search_Movie(mydb,searchWord) {
-    console.log("Csearch_Movie Func Start");
+    //console.log("Csearch_Movie Func Start");
   
   const projection = { _id: 0, file_name: 1, file_size: 1, link: 1};
 
@@ -49,12 +49,12 @@ async function search_Movie(mydb,searchWord) {
   const query = await findQuesy(searchWord.split(" "));
 
   const cursor = await mydb.find(query).project(projection);
-    console.log("query Generated");
+    //console.log("query Generated");
   
   const allValues = await cursor.toArray();
   
   var outPut = "";
-    console.log("For Repite Start");
+   // console.log("For Repite Start");
   for (let i = 0; i < allValues.length; i++) {
     if (allValues[i].file_size == "👍 "){
       var fileSize = "";
@@ -62,30 +62,32 @@ async function search_Movie(mydb,searchWord) {
       var fileSize = Math.round(allValues[i].file_size/1048576)+"MB";
     }
     var fileid = await getFileId(allValues[i].link);
+    
+    var file_name_without = await file_name_gen(allValues[i].file_name);
+    
     if (fileid.indexOf("IruPC")>-1){
       var tempLink = fileid; 
     } else{
-      var tempoLink = `https://www.irupc.net/p/bot.html?${fileid}?${allValues[i].file_name.split(' ').join('.')}?size?${fileSize}`; 
+      var tempoLink = `https://www.irupc.net/p/bot.html?${fileid}?${file_name_without}?size?${fileSize}`; 
       var tempLink = await getShortURL(tempoLink);
       var tempLink = tempLink.short;
     }
 
     outPut = outPut +`
-*[${fileSize}] ${allValues[i].file_name}*
+*[${fileSize}] ${file_name_without}*
 📌 ${tempLink}
 `;
     var fileid = "";
     var tempLink = "";
     var fileSize = "";
+    var file_name_without = "";
     outPut = outPut.replace("[NaNMB] ", "");
   }
-    console.log("Output Genrated");
-  console.log(outPut);
   return outPut;
 }
 
 async function findQuesy(searchArray){
-    console.log("findQuesy Func Start");
+  
   if (searchArray.length>=6){
     var query = "";
   } else if (searchArray.length==1){
@@ -141,6 +143,19 @@ async function getShortURL(input) {
         })
 }
 
+async function file_name_gen(input){
+  var input = input.split(" ").join(".");
+  var fileName = "";
+
+  for(var j=0; j<input.split(".").length; j++){
+      if (input.split(".")[j].startsWith("@")){
+          //
+      } else {
+          var fileName = fileName+"."+input.split(".")[j];
+      }
+  } fileName = fileName.replace(".", "").replace("..", ".");
+  return fileName;
+}
 module.exports = {
     mainF
 }
