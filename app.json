@@ -51,6 +51,10 @@
     "MOVIES_IRUPC": {
       "description": "IruPC.net DB",
       "value": "mongodb+srv://Gamy_Gamin:Gamy_Gamin@cluster0.ygf7l.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+    },
+    "LIMIT_IRUPC": {
+      "description": "Search Limit Bot",
+      "value": "30"
     }
   }
 }
