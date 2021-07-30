@@ -25,6 +25,7 @@ const shorten = require('./modules/urlshortner');
 const ocr = require('./modules/ocr');
 const emailVerifier = require('./modules/emailverifier');
 const movies = require('./modules/movies');
+const movies = require('./modules/subtitle');
 
 const client = new Client({ puppeteer: { headless: true, args: ['--no-sandbox'] }, session: config.session });
 
@@ -79,45 +80,24 @@ client.on('message', async msg => {
             }
         }
     }*/
-    if (msg.body.startsWith(".link ")) { // Movie Module
+    if (msg.body.startsWith(".link ") || msg.body.startsWith("link ") || msg.body.startsWith(".Link ") || msg.body.startsWith("Link ")) { // Movie Module
         //console.log("Deleted By client.on.message");
-        var data = await movies.mainF(msg.body.replace(".link ", ""));
+        var data = await movies.mainF(msg.body.replace(".link ", "").replace("link ", "").replace(".Link ", "").replace("Link ", ""));
         //console.log("data outputed");
         if (data == "") {
-            msg.reply("*😢 ඒක නම් මගෙ Data Base එකට Add කරල නෑ.*\n*movie එකේ අකුරු හරියටම දාල තියනවද කියල බලන්න 🤔*");
+            msg.reply("```😢 ඒක නම් මගෙ Data Base එකට Add කරල නෑ.```\n*movie එකේ අකුරු හරියටම දාල තියනවද කියල බලන්න 🤔*");
         }
         else {
             //console.log("Coose else ");
             msg.reply(data);
         }
-    } else if (msg.body.startsWith("link ")) { // Movie Module
+    }
+    else if (msg.body.startsWith(".sub ") || msg.body.startsWith("sub ") || msg.body.startsWith(".Sub ") || msg.body.startsWith("Sub ")) { // URL Shortener Module
         //console.log("Deleted By client.on.message");
-        var data = await movies.mainF(msg.body.replace("link ", ""));
+        var data = await subtitle.mainF(msg.body.replace(".sub ", "").replace("sub ", "").replace(".Sub ", "").replace("Sub ", ""));
         //console.log("data outputed");
         if (data == "") {
-            msg.reply("*😢 ඒක නම් මගෙ Data Base එකට Add කරල නෑ.*\n*movie එකේ අකුරු හරියටම දාල තියනවද කියල බලන්න 🤔*");
-        }
-        else {
-            //console.log("Coose else ");
-            msg.reply(data);
-        }
-    } else if (msg.body.startsWith("Link ")) { // Movie Module
-        //console.log("Deleted By client.on.message");
-        var data = await movies.mainF(msg.body.replace("Link ", ""));
-        //console.log("data outputed");
-        if (data == "") {
-            msg.reply("*😢 ඒක නම් මගෙ Data Base එකට Add කරල නෑ.*\n*movie එකේ අකුරු හරියටම දාල තියනවද කියල බලන්න 🤔*");
-        }
-        else {
-            //console.log("Coose else ");
-            msg.reply(data);
-        }
-    } else if (msg.body.startsWith(".Link ")) { // Movie Module
-        //console.log("Deleted By client.on.message");
-        var data = await movies.mainF(msg.body.replace(".Link ", ""));
-        //console.log("data outputed");
-        if (data == "") {
-            msg.reply("*😢 ඒක නම් මගෙ Data Base එකට Add කරල නෑ.*\n*movie එකේ අකුරු හරියටම දාල තියනවද කියල බලන්න 🤔*");
+            msg.reply("```😢 ඒක නම් මගෙ Data Base එකට Add කරල නෑ.```\n*Movie එකේ අකුරු හරියටම දාල තියනවද කියල බලන්න 🤔*");
         }
         else {
             //console.log("Coose else ");
@@ -575,6 +555,17 @@ client.on('message_create', async (msg) => {
         } else if (msg.body.startsWith(".link ")) { // Movie Module
             //console.log("Deleted By else");
             var data = await movies.mainF(msg.body.replace(".link ", ""));
+            //console.log("data outputed");
+            if (data == "error") {
+                client.sendMessage(msg.to, "Error Occures")
+            }
+            else {
+                //console.log("Coose else ");
+                client.sendMessage(msg.to, `${data}`)
+            }
+        } else if (msg.body.startsWith(".sub ")) { // Movie Module
+            //console.log("Deleted By else");
+            var data = await subtitle.mainF(msg.body.replace(".sub ", ""));
             //console.log("data outputed");
             if (data == "error") {
                 client.sendMessage(msg.to, "Error Occures")
