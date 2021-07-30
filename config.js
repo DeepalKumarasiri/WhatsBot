@@ -11,5 +11,6 @@ module.exports = {
     enable_delete_alert: process.env.ENABLE_DELETE_ALERT || "true",
     ocr_space_api_key: process.env.OCR_SPACE_API_KEY || "7e4bfe810488957",
     infospace_api_key: process.env.INFOSPACE_API_KEY || "6zzl92aoe16bz0cgu3soyf73zu5zeu7x5p9wqn0wdq8k6v4fxuf3o",
-    movie_db_url: process.env.MOVIES_IRUPC || "mongodb+srv://Gamy_Gamin:Gamy_Gamin@cluster0.ygf7l.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+    movie_db_url: process.env.MOVIES_IRUPC || "mongodb+srv://Gamy_Gamin:Gamy_Gamin@cluster0.ygf7l.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    search_limit: process.env.LIMIT_IRUPC || "30"
 }
