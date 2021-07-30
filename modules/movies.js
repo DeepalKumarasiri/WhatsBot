@@ -7,6 +7,7 @@ const { MongoClient } = require('mongodb');
 async function mainF(keyword) {
   //console.log("main Func Start");
   const uri = config.movie_db_url;
+  const limit = config.search_limit;
   const client = await new MongoClient(uri, {useUnifiedTopology: true});
 
   try {
@@ -17,7 +18,7 @@ async function mainF(keyword) {
     
     var key_word = keyword.replace("(", "").replace(")", "");
     //console.log(key_word);
-    const replyText = await search_Movie(mydb, key_word);
+    const replyText = await search_Movie(mydb, key_word, limit);
     //console.log("Replay Text Returned");
     
     return replyText;
@@ -37,7 +38,7 @@ async function getFileId(input){
   }
 }
 
-async function search_Movie(mydb,searchWord) {
+async function search_Movie(mydb,searchWord, limit) {
     //console.log("Csearch_Movie Func Start");
   
   const projection = { _id: 0, file_name: 1, file_size: 1, link: 1};
@@ -48,7 +49,7 @@ async function search_Movie(mydb,searchWord) {
   
   const query = await findQuesy(searchWord.split(" "));
 
-  const cursor = await mydb.find(query).project(projection).limit(25);
+  const cursor = await mydb.find(query).project(projection).limit(limit);
     //console.log("query Generated");
   
   const allValues = await cursor.toArray();
@@ -73,9 +74,9 @@ async function search_Movie(mydb,searchWord) {
       var tempLink = tempLink.short;
     }
     fileSize = "["+fileSize+"]";
-    fileSize = fileSize.replace("[1MB]", "♨️Subtitle").replace("[0MB]", "♨️Subtitle").replace("[2MB]", "♨️Subtitle").replace("[3MB]", "♨️Subtitle");
+    fileSize = fileSize.replace("[1MB]", "♨️Subtitle |").replace("[0MB]", "♨️Subtitle |").replace("[2MB]", "♨️Subtitle |").replace("[3MB]", "♨️Subtitle |");
     outPut = outPut +`
-*[${fileSize}] ${file_name_without}*
+*${fileSize} ${file_name_without}* 
 📌 ${tempLink}
 `;
     var fileid = "";
@@ -94,43 +95,43 @@ async function findQuesy(searchArray){
   } else if (searchArray.length==1){
     var query = { 
       $text: { 
-        $search: `\"${searchArray[0]}\"` 
+        $search: `\"${searchArray[0]}\" -zip -rar -srt -7z` 
       }
     }
   } else if (searchArray.length==2){
     var query = { 
       $text: { 
-        $search: `\"${searchArray[0]}\" \"${searchArray[1]}\"` 
+        $search: `\"${searchArray[0]}\" \"${searchArray[1]}\" -zip -rar -srt -7z` 
       }
     }
   } else if (searchArray.length==3){
     var query = { 
       $text: { 
-        $search: `\"${searchArray[0]}\" \"${searchArray[1]}\" \"${searchArray[2]}\"` 
+        $search: `\"${searchArray[0]}\" \"${searchArray[1]}\" \"${searchArray[2]}\" -zip -rar -srt -7z` 
       }
     }
   } else if (searchArray.length==4){
     var query = { 
       $text: { 
-        $search: `\"${searchArray[0]}\" \"${searchArray[1]}\" \"${searchArray[2]}\" \"${searchArray[3]}\"` 
+        $search: `\"${searchArray[0]}\" \"${searchArray[1]}\" \"${searchArray[2]}\" \"${searchArray[3]}\" -zip -rar -srt -7z` 
       }
     }
   } else if (searchArray.length==5){
     var query = { 
       $text: { 
-        $search: `\"${searchArray[0]}\" \"${searchArray[1]}\" \"${searchArray[2]}\" \"${searchArray[3]}\" \"${searchArray[4]}\"` 
+        $search: `\"${searchArray[0]}\" \"${searchArray[1]}\" \"${searchArray[2]}\" \"${searchArray[3]}\" \"${searchArray[4]}\" -zip -rar -srt -7z` 
       }
     }
   } else if (searchArray.length==6){
     var query = { 
       $text: { 
-        $search: `\"${searchArray[0]}\" \"${searchArray[1]}\" \"${searchArray[2]}\" \"${searchArray[3]}\" \"${searchArray[4]}\" \"${searchArray[5]}\"` 
+        $search: `\"${searchArray[0]}\" \"${searchArray[1]}\" \"${searchArray[2]}\" \"${searchArray[3]}\" \"${searchArray[4]}\" \"${searchArray[5]}\" -zip -rar -srt -7z` 
       }
     }
   } else if (searchArray.length==7){
     var query = { 
       $text: { 
-        $search: `\"${searchArray[0]}\" \"${searchArray[1]}\" \"${searchArray[2]}\" \"${searchArray[3]}\" \"${searchArray[4]}\" \"${searchArray[5]}\" \"${searchArray[6]}\"` 
+        $search: `\"${searchArray[0]}\" \"${searchArray[1]}\" \"${searchArray[2]}\" \"${searchArray[3]}\" \"${searchArray[4]}\" \"${searchArray[5]}\" \"${searchArray[6]}\" -zip -rar -srt -7z` 
       }
     }
   } else{var query ="";}
