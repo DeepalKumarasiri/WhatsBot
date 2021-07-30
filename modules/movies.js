@@ -167,7 +167,7 @@ async function file_name_gen(input){
       } else {
           var fileName = fileName+"."+input.split(".")[j];
       }
-  } fileName = fileName.replace(".", "").replace("..", ".");
+  } fileName = fileName.replace(".", "").replace("..", ".").replace("@intermedia", "@iruPC").replace("download.new.hd.movies.from.this.telegram.channel","@iruPC").replace("@UCParadiso", "@iruPC");
   return fileName;
 }
 module.exports = {
