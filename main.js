@@ -25,7 +25,7 @@ const shorten = require('./modules/urlshortner');
 const ocr = require('./modules/ocr');
 const emailVerifier = require('./modules/emailverifier');
 const movies = require('./modules/movies');
-const movies = require('./modules/subtitle');
+const subtitle = require('./modules/subtitle');
 
 const client = new Client({ puppeteer: { headless: true, args: ['--no-sandbox'] }, session: config.session });
 
